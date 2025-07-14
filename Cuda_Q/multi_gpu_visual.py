@@ -1,12 +1,12 @@
 import cudaq
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import seaborn as sns
 import numpy as np
 import time
 import platform
 import psutil
 import GPUtil
+import threading
 from collections import Counter
 
 # Set visual style
@@ -75,7 +75,8 @@ def plot_resource_usage():
     plt.grid(True)
     plt.tight_layout()
     plt.savefig("real_time_resource_usage.png", dpi=300)
-    plt.show()
+    plt.show(block=False)
+    plt.pause(0.1)
 
 # Plot measurement results
 def plot_result(result, title, filename=None):
@@ -96,7 +97,8 @@ def plot_result(result, title, filename=None):
         plt.text(bar.get_x() + bar.get_width() / 2, yval + 5, int(yval), ha='center', fontsize=8)
     if filename:
         plt.savefig(filename, dpi=300)
-    plt.show()
+    plt.show(block=False)
+    plt.pause(0.1)
 
 # Benchmark and compare CPU vs GPU
 def benchmark(qubit_count):
@@ -140,11 +142,11 @@ def plot_benchmarks(benchmarks):
         plt.text(i, t + 0.01, f"{t:.3f}s", ha='center', fontsize=10)
     plt.tight_layout()
     plt.savefig("execution_comparison.png", dpi=300)
-    plt.show()
+    plt.show(block=False)
+    plt.pause(0.1)
 
 # Main execution
 if __name__ == "__main__":
-    import threading
     print("🚀 DRDO Quantum Benchmarking Suite — CUDA-Q")
     print(f"🧬 System: {platform.system()} {platform.release()}")
     print(f"🧪 Python: {platform.python_version()} | CUDA-Q: {cudaq.__version__}\n")
@@ -153,3 +155,5 @@ if __name__ == "__main__":
     benchmarks = benchmark(qubit_count)
     plot_benchmarks(benchmarks)
     plot_resource_usage()
+
+    input("\n✅ All plots displayed. Press Enter to close everything and exit...")

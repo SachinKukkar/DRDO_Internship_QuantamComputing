@@ -7,10 +7,10 @@ def kernel():
     qubit = cudaq.qubit()
 
     # Apply Hadamard gate to single qubit to put it in equal superposition.
-    h(qubit)
+    cudaq.h(qubit)
 
     # Measurement operator.
-    mz(qubit)
+    cudaq.measure(qubit)
 
 
 result = cudaq.sample(kernel)
